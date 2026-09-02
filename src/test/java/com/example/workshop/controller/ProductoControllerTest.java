@@ -7,11 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @WebMvcTest(ProductoController.class)
 class ProductoControllerTest {
@@ -45,4 +50,11 @@ class ProductoControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.precioFinal").value(90.0));
     }
+     @GetMapping("/estado")
+ public ResponseEntity<Map<String, String>> estadoServicio() {
+     Map<String, String> status = new HashMap<>();
+     status.put("estado", "ACTIVO");
+     status.put("version", "1.0.0");
+     return ResponseEntity.ok(status);
+ }
 }
